@@ -1,4 +1,6 @@
+using Microsoft.Extensions.Configuration;
 using UserPostsAPI.Clients;
+using UserPostsAPI.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IHttpClient, UserPostsAPI.Clients.HttpClient>();
+
+builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
 
 var app = builder.Build();
 
