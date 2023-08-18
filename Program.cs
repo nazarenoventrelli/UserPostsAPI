@@ -1,4 +1,6 @@
 using Microsoft.Extensions.Configuration;
+using UserPostsAPI.C;
+using UserPostsAPI.Cache;
 using UserPostsAPI.Clients;
 using UserPostsAPI.Configuration;
 
@@ -11,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IHttpClient, UserPostsAPI.Clients.HttpClient>();
+builder.Services.AddSingleton<ICacheService, CacheService>();
 
 builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
 
