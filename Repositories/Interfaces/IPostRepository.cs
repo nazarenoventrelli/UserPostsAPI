@@ -12,6 +12,6 @@ namespace UserPostsAPI.Repositories
         Task<bool> DeletePost(int postId);
         Task DeleteCommentByPostId(int postId);
         Task AddCommentToPost(int postId, Comment comment);
-
+        Task<IEnumerable<Comment>> GetAllComments();
     }
 }

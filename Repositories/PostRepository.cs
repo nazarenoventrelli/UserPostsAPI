@@ -10,6 +10,7 @@ namespace UserPostsAPI.Repositories
         private readonly IHttpClient _httpClient;
         private const string PostsEndpoint = "/posts";
         private const string CommentsEndpoint = "/comments?postId=";
+        private const string AllCommentsEndpoint = "/comments";
 
         public PostRepository(IHttpClient httpClient)
         {
@@ -33,6 +34,21 @@ namespace UserPostsAPI.Repositories
             return new List<Post>();
         }
 
+        public async Task<IEnumerable<Comment>> GetAllComments()
+        {
+            HttpResponseMessage response = await _httpClient.Get(AllCommentsEndpoint);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+
+                IEnumerable<Comment> comments = JsonSerializer.Deserialize<IEnumerable<Comment>>(content);
+
+                return comments;
+            }
+
+            return new List<Comment>();
+        }
         public async Task<IEnumerable<Comment>> GetCommentsByPostId(int postId)
         {
             string fullEndpoint = CommentsEndpoint + postId;
